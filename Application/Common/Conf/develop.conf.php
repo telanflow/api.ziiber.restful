@@ -1,5 +1,6 @@
 <?php
 /**
+ * 开发环境 - 配置文件
  * @author Ziiber <ziiber@foxmail.com>
  * @copyright 2015
  * @version 1.0.0
@@ -14,5 +15,11 @@ $develop = array(
     'DB_PREFIX' => 'music_',     // 数据库表前缀
 
     # 默认访问模型
-    'DEFAULT_MODULE'	=>	'Api'
+    'DEFAULT_MODULE'    =>  'Api',
+
+    # 路由配置
+    'URL_ROUTER_ON'   => true,                           // 开启路由
+    'URL_ROUTE_RULES' => array(
+        // 'baidu/:' => array('Api/Index/query', 'status=1'),
+    )
 );

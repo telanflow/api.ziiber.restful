@@ -5,7 +5,7 @@ use Think\Controller;
 class IndexController extends BaseController {
 
 
-    public function query(){
+    public function index(){
     	
     	if( $this->hasParams('id') ){
     		

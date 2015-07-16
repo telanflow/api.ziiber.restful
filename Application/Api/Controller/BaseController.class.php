@@ -20,6 +20,7 @@ class BaseController extends RestController {
 			$this->_params = I('put.');
 		if( IS_DELETE )
 			// $this->_params = I('delete.');
+            exit('not delete');
 		
 	}
 

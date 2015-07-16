@@ -18,6 +18,6 @@ $product = array(
     # 路由配置
     'URL_ROUTER_ON'   => true 							// 开启路由
     'URL_ROUTE_RULES' => array(
-	    'baidu/:' => array('Api/Index/query', 'status=1'),
+	    // 'baidu/:' => array('Api/Index/query', 'status=1'),
 	)
 );
