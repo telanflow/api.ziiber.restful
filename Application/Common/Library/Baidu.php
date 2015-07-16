@@ -8,4 +8,10 @@ class Baidu extends Base{
 
     }
 
+    # 获取百度ID
+	public function getBaiduId(){
+
+		
+
+	}
 }

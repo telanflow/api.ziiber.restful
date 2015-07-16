@@ -1,16 +1,17 @@
 <?php
 namespace Api\Controller;
+
 use Think\Controller;
+use Common\Library\Baidu;
 
 class IndexController extends BaseController {
 
 
     public function index(){
     	
-    	if( $this->hasParams('id') ){
-    		
-    	}
-    	echo $this->_method;
+        $result = http( 'http://fm.baidu.com' );
+        unset($result['content']);
+        var_dump($result);
 
     }
 

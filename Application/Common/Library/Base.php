@@ -9,8 +9,5 @@ class Base{
         
     }
 
-    // 请求
-    public function _request( $method = 'get', $url = null, $params = array() ){
-
-    }
+    
 }
