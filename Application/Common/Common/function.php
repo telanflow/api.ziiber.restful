@@ -55,8 +55,13 @@ function http( $url = null, $params = array(), $method = 'get', $header = array(
 	# Cookie
 	if( isset($header['cookie']) )
 	{
-		if( is_array($header['cookie']) )
-			curl_setopt($ch, CURLOPT_COOKIE, implode('; ', $header['cookie']));
+		if( is_array($header['cookie']) ){
+			$cookies = array();
+			foreach ($header as $key => $value) {
+				$cookies[] = $key . '=' . $value;
+			}
+			curl_setopt($ch, CURLOPT_COOKIE, implode('; ', $cookies));
+		}
 		else
 			curl_setopt($ch, CURLOPT_COOKIE, $header['cookie']);
 	}
