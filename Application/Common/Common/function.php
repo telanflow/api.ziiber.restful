@@ -1,7 +1,7 @@
 <?php
 
 // HTTP请求
-function http( $url = null, $params = array(), $method = 'get', $header = array() ){
+function http( $url = '', $params = array(), $method = 'get', $header = array() ){
 
 	$ret    = null;
 	$result = null;
@@ -12,11 +12,10 @@ function http( $url = null, $params = array(), $method = 'get', $header = array(
 	$ch = curl_init();	# 初始化curl
 
 	# Default Option
-	curl_setopt($ch, CURLOPT_FAILONERROR, true); # 显示HTTP状态码
-	curl_setopt($ch, CURLOPT_HEADER, false);	 # 启用时会将头文件的信息作为数据流输出
+	curl_setopt($ch, CURLOPT_FAILONERROR, true); 	# 显示HTTP状态码
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); # curl_exec 不直接输出到浏览器
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);	# 读取文件中的cookie
+	curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);	# 保存cookie到文件
 
 	# 请求类型
 	if( $method == 'post' )
@@ -47,6 +46,18 @@ function http( $url = null, $params = array(), $method = 'get', $header = array(
 	# 一个用来设置HTTP头字段的数组。使用如下的形式的数组进行设置： array('Content-type: text/plain', 'Content-length: 100') 
 	if( !is_assoc($header) )
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+
+	# 启用时将不对HTML中的BODY部分进行输出。
+	if( isset($header['nobody']) )
+		curl_setopt($ch, CURLOPT_NOBODY, $header['nobody']);
+	else
+		curl_setopt($ch, CURLOPT_NOBODY, false);
+
+	# 启用时会将头文件的信息作为数据流输出
+	if( isset($header['header']) )
+		curl_setopt($ch, CURLOPT_HEADER, $header['header']);
+	else
+		curl_setopt($ch, CURLOPT_HEADER, false);
 
 	# User_Agent
 	if( isset($header['useragent']) )
@@ -80,7 +91,8 @@ function http( $url = null, $params = array(), $method = 'get', $header = array(
 
 	# HTTP代理通道
 	# 一个用来连接到代理的"[username]:[password]"格式的字符串
-	if( isset($header['proxy']) ){
+	if( isset($header['proxy']) )
+	{
 		curl_setopt($ch, CURLOPT_PROXY, true);
 		curl_setopt($ch, CURLOPT_PROXYUSERPWD, $header['proxy']);
 	}
