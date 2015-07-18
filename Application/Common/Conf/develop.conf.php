@@ -21,5 +21,11 @@ $develop = array(
     'URL_ROUTER_ON'   => true,                           // 开启路由
     'URL_ROUTE_RULES' => array(
         // 'baidu/:' => array('Api/Index/query', 'status=1'),
+    ),
+
+    # 域名配置
+    'APP_SUB_DOMAIN_DEPLOY'   =>    1, # 开启子域名配置
+    'APP_SUB_DOMAIN_RULES'    =>    array(   
+        'api.com'  => 'Api'
     )
 );
