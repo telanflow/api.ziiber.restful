@@ -7,9 +7,7 @@ class EmptyController extends BaseController{
 
 	public function index()
 	{
-
-		$this->ajaxResponse( 404, 'error', '' );
-
+		$this->ajaxResponse( 404, 'not resource', '' );
 	}
 
 }

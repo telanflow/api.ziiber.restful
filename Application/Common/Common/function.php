@@ -1,21 +1,25 @@
 <?php
 
-// HTTP请求
+/**
+ * HTTP请求
+ * @param  string $url    url
+ * @param  array  $params 参数
+ * @param  string $method 请求方式 get post
+ * @param  array  $header 协议头
+ * @return [type]         [description]
+ */
 function http( $url = '', $params = array(), $method = 'get', $header = array() ){
 
 	$ret    = null;
 	$result = null;
-	$cookie = LOCAL_PATH.'\cookie.txt';
-
 	$method = strtolower($method);
 
-	$ch = curl_init();	# 初始化curl
+	# 初始化curl
+	$ch = curl_init();
 
 	# Default Option
 	curl_setopt($ch, CURLOPT_FAILONERROR, true); 	# 显示HTTP状态码
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); # curl_exec 不直接输出到浏览器
-	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);	# 读取文件中的cookie
-	curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);	# 保存cookie到文件
 
 	# 请求类型
 	if( $method == 'post' )
@@ -24,20 +28,20 @@ function http( $url = '', $params = array(), $method = 'get', $header = array() 
 		curl_setopt ( $ch, CURLOPT_POSTFIELDS, $params );
 	}
 	elseif( $method == 'put' )
+	{
 		curl_setopt($ch, CURLOPT_PUT, true);
+		curl_setopt ( $ch, CURLOPT_POSTFIELDS, $params );
+	}
 	else
 	{
 		curl_setopt($ch, CURLOPT_HTTPGET, true);
-
-		if( count($params) > 0 )
+		if( !empty($params) )
 		{
 			$link = array();
 			foreach ($params as $key => $value)
 				$link[] = $key.'='.$value;
-			
 			$url .= '?'.implode('&', $link);
 		}
-
 	}
 	
 	# 设置url	
@@ -66,7 +70,8 @@ function http( $url = '', $params = array(), $method = 'get', $header = array() 
 	# Cookie
 	if( isset($header['cookie']) )
 	{
-		if( is_array($header['cookie']) ){
+		if( is_array($header['cookie']) )
+		{
 			$cookies = array();
 			foreach ($header as $key => $value) {
 				$cookies[] = $key . '=' . $value;
@@ -76,6 +81,14 @@ function http( $url = '', $params = array(), $method = 'get', $header = array() 
 		else
 			curl_setopt($ch, CURLOPT_COOKIE, $header['cookie']);
 	}
+
+	# 读取文件中的cookie
+	if( isset($params['cookiefile']) )
+		curl_setopt($ch, CURLOPT_COOKIEFILE, $params['cookiefile']);
+	
+	# 保存cookie到文件
+	if( isset($params['cookiejar']) )
+		curl_setopt($ch, CURLOPT_COOKIEJAR, $params['cookiejar']);
 
 	# Referer
 	if( isset($header['referer']) )

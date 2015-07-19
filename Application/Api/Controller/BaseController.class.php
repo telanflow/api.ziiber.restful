@@ -21,8 +21,7 @@ class BaseController extends RestController {
 		if( IS_PUT )
 			$this->_params = I('put.');
 		if( IS_DELETE )
-			// $this->_params = I('delete.');
-            exit('not delete');
+			$this->_params = I();
 	}
 
 	# 是否存在参数
